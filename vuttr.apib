@@ -1,0 +1,86 @@
+FORMAT: 1A
+HOST: http://localhost:3000
+
+# VUTTR
+
+Very Useful Tools to Remember (VUTTR). API desenvolvida como desafio proposto para a BossaBox.
+
+# Group API
+
+## About [/]
+
+Aqui está um breve status da api, como nome e versão atual.
+
+# Group Ferramentas
+
+## Ferramentas [/tools]
+
+### Criar ferramenta [POST]
+
++ Request Criar uma ferramenta
+
+    + Headers
+
+            Accept: application/json
+            Content-Type: application/json
+    + Attributes (Tool)
+
++ Response 201 (application/json)
+    + Attributes (Created)
+
+### Listar ferramentas [GET]
+
++ Response 200 (application/json)
+    + Attributes (array[Tool])
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+## Ferramenta [/tools/{id_tool}]
+
++ Parameters
+    + id_tool: 5cdf26cd88952753d4654b12 (string, required) - Identificador da ferramenta
+
+### Ver ferramenta [GET]
+
++ Response 200 (application/json)
+    + Attributes (Tool)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+
+### Excluir ferramenta [DELETE]
+
++ Response 200 (application/json)
+    + Attributes (Id)
+
++ Response 404 (application/json)
+    + Attributes (Error)
+
+# Data Structures
+
+## Tool (object)
++ subject (string) - Assunto da mensagem
++ body (string) - Corpo da mensagem
+
+
+## MessageUpdate (Tool)
++ id_message (number) - Id da mensagem
+
+## Created (object)
++ id (string) - Id gerado
+
+## Id (object)
++ id (string) - Id a ser processado
+
+## Error (object)
++ code: 400 (number) - Status code
++ message (string) - Mensagem do status
++ description (string) - Descrição do status
+
+
+## Multi (object)
++ id (number) - Código da entidade
++ code: 200 (number) - Status code
++ message (string) - Descrição do status

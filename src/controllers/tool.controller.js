@@ -5,6 +5,12 @@ const repository = require('../repositories/tool.repository');
 
 exports.get = async (req, res, next) => {
     try {
+        let tag = req.query.tag;
+        if (tag) {
+            let data = await repository.getByTag(tag);
+            res.status(200).send(data);
+        }
+
         let data = await repository.get();
         res.status(200).send(data);
     } catch (e) {

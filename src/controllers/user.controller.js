@@ -5,7 +5,7 @@ const repository = require('../repositories/user.repository');
 const md5 = require('md5');
 const authService = require('../services/auth.service');
 
-exports.post = async (req, res, next) => {
+exports.register = async (req, res, next) => {
     let contract = new ValidationContract();
     contract.hasMinLen(req.body.name, 3, 'O nome deve conter pelo menos 3 caracteres');
     contract.isEmail(req.body.email, 'E-mail inválido');
@@ -40,7 +40,7 @@ exports.post = async (req, res, next) => {
     }
 };
 
-exports.authenticate = async (req, res, next) => {
+exports.login = async (req, res, next) => {
     try {
         const customer = await repository.authenticate({
             email: req.body.email,

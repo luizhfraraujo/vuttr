@@ -2,6 +2,10 @@
 const request = require('supertest');
 const server = require('../bin/server');
 
+let userId = "";
+let toolId = "";
+let token = "";
+
 afterAll(() => {
     server.close();
 })
@@ -12,7 +16,68 @@ describe('Início dos testes na rota Index', () => {
         const response = await request(server).get('/');
         expect(response.status).toEqual(200);
     });
-})
+});
+
+describe('Início dos testes na rota Users', () => {
+
+    test('Realiza post em /users/register sem email', async () => {
+        const response = await request(server).post('/users/register')
+            .send({
+                "password": "123456",
+                "name": "Teste"
+            });
+        expect(response.status).toBe(400);
+    });
+
+    test('Realiza post em /users/register sem password', async () => {
+        const response = await request(server).post('/users/register')
+            .send({
+                "email": "teste@teste.com",
+
+                "name": "Teste"
+            });
+        expect(response.status).toBe(400);
+    });
+
+    test('Realiza post em /users/register corretamente', async () => {
+        const response = await request(server).post('/users/register')
+            .send({
+                "email": "teste@teste.com",
+                "password": "123456",
+                "name": "Teste"
+            });
+        expect(response.status).toBe(201);
+
+        expect(Object.keys(response.body)).toEqual([
+            '_id',
+            'email',
+        ]);
+
+        userId = response.body._id;
+    });
+
+    test('Realiza post em /users/login corretamente', async () => {
+        const response = await request(server).post('/users/login')
+            .send({
+                "email": "teste@teste.com",
+                "password": "123456",
+            });
+        expect(response.status).toBe(201);
+
+        expect(Object.keys(response.body)).toEqual([
+            'token',
+            'data',
+        ])
+        token = response.body.token;
+    });
+
+    test('Realiza delete em /users/id sem id', async () => {
+        const response = await request(server).delete(`/users/`);
+        expect(response.status).toBe(404);
+    });
+
+
+});
 
 describe('Início dos testes na rota Tools', () => {
 
@@ -64,7 +129,7 @@ describe('Início dos testes na rota Tools', () => {
             'description',
             '__v'
         ])
-        createdId = response.body._id;
+        toolId = response.body._id;
     });
 
 
@@ -85,72 +150,16 @@ describe('Início dos testes na rota Tools', () => {
     });
 
     test('Tenta remover uma ferramenta informando parâmetro (/tools/id)', async () => {
-        const response = await request(server).delete(`/tools/${createdId}`);
+        const response = await request(server).delete(`/tools/${toolId}`);
         expect(response.status).toBe(200);
     });
 
 });
 
 
-describe('Início dos testes na rota Users', () => {
-
-    test('Realiza post em /users/register sem email', async () => {
-        const response = await request(server).post('/users/register')
-            .send({
-                "password": "123456",
-                "name": "Teste"
-            });
-        expect(response.status).toBe(400);
-    });
-
-    test('Realiza post em /users/register sem password', async () => {
-        const response = await request(server).post('/users/register')
-            .send({
-                "email": "teste@teste.com",
-                
-                "name": "Teste"
-            });
-        expect(response.status).toBe(400);
-    });
-
-    test('Realiza post em /users/register corretamente', async () => {
-        const response = await request(server).post('/users/register')
-            .send({
-                "email": "teste@teste.com",
-                "password": "123456",
-                "name": "Teste"
-            });
-        expect(response.status).toBe(201);
-
-        expect(Object.keys(response.body)).toEqual([
-            '_id',
-            'email',
-        ]);
-
-        createdId = response.body._id;
-    });
-
-    test('Realiza post em /users/login corretamente', async () => {
-        const response = await request(server).post('/users/login')
-            .send({
-                "email": "teste@teste.com",
-                "password": "123456",
-            });
-        expect(response.status).toBe(201);
-
-        expect(Object.keys(response.body)).toEqual([
-            'token',
-            'data',
-        ])
-    });
-
-    test('Realiza delete em /users/id sem id', async () => {
-        const response = await request(server).delete(`/users/`);
-        expect(response.status).toBe(404);
-    });
-
+describe('Remove Users', () => {
     test('Realiza delete em /users/id corretamente', async () => {
-        const response = await request(server).delete(`/users/${createdId}`);
+        const response = await request(server).delete(`/users/${userId}`);
         expect(response.status).toBe(200);
     });
 });

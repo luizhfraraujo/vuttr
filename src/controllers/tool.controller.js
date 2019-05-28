@@ -9,6 +9,7 @@ exports.get = async (req, res, next) => {
         if (tag) {
             let data = await repository.getByTag(tag);
             res.status(200).send(data);
+            return;
         }
 
         let data = await repository.get();

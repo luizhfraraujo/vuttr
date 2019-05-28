@@ -8,6 +8,10 @@
     "start": "node ./bin/server.js",
     "dev": "nodemon ./bin/server.js"
   },
+  "jest": {
+    "verbose": true,
+    "setTimeout":10000
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

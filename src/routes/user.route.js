@@ -7,6 +7,6 @@ const controller = require('../controllers/user.controller');
 router.post('/login', controller.login);
 router.post('/register', controller.register);
 
-//router.delete('/:id', controller.delete);
+router.delete('/:id', controller.delete);
 
 module.exports = router;

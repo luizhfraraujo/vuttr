@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
 exports.create = async (data) => {
-    var user = new User(data);
-    await user.save();
+    let user = new User(data);
+    let res = await user.save();
+    return res;
 }
 
 exports.authenticate = async (data) => {

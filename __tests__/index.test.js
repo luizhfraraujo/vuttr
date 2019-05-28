@@ -82,7 +82,7 @@ describe('Início dos testes na rota Users', () => {
 describe('Início dos testes na rota Tools', () => {
 
     test('Realiza post em /tools enviando title vazio', async () => {
-        const response = await request(server).post('/tools').set('Content-Type', 'application/json').send({
+        const response = await request(server).post('/tools').set('Content-Type', 'application/json').set('Authorization', `Bearer ${token}`).send({
             "title": "",
             "link": "http://teste.com",
             "description": "teste de app",
@@ -92,7 +92,7 @@ describe('Início dos testes na rota Tools', () => {
     });
 
     test('Realiza post em /tools com "description" vazio', async () => {
-        const response = await request(server).post('/tools').set('Content-Type', 'application/json').send({
+        const response = await request(server).post('/tools').set('Content-Type', 'application/json').set('Authorization', `Bearer ${token}`).send({
             "title": "teste 1",
             "link": "http://teste.com",
             "description": "",
@@ -102,7 +102,7 @@ describe('Início dos testes na rota Tools', () => {
     });
 
     test('Realiza post em /tools com "link" vazio', async () => {
-        const response = await request(server).post('/tools').set('Content-Type', 'application/json').send({
+        const response = await request(server).post('/tools').set('Content-Type', 'application/json').set('Authorization', `Bearer ${token}`).send({
             "title": "teste 1",
             "link": "",
             "description": "teste de app",
@@ -118,7 +118,7 @@ describe('Início dos testes na rota Tools', () => {
                 "link": "http://teste.com",
                 "description": "teste de app",
                 "tags": ["teste", "app", "jest"]
-            });
+            }).set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(201);
 
         expect(Object.keys(response.body)).toEqual([
@@ -145,12 +145,12 @@ describe('Início dos testes na rota Tools', () => {
 
 
     test('Tenta remover uma ferramenta sem informar parâmetro (/tools/id)', async () => {
-        const response = await request(server).delete(`/tools`);
+        const response = await request(server).delete(`/tools`).set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(404);
     });
 
     test('Tenta remover uma ferramenta informando parâmetro (/tools/id)', async () => {
-        const response = await request(server).delete(`/tools/${toolId}`);
+        const response = await request(server).delete(`/tools/${toolId}`).set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
     });
 

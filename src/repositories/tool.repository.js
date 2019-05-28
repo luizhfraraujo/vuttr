@@ -3,19 +3,19 @@ const mongoose = require('mongoose');
 const Tool = mongoose.model('Tool');
 
 exports.get = async () => {
-    let res = await Tool.find({});
+    let res = await Tool.find({}, "id title description link tags");
     return res;
 }
 
 exports.getById = async (id) => {
-    const res = await Tool.findById(id);
+    const res = await Tool.findById(id, "id title description link tags");
     return res;
 }
 
 exports.getByTag = async (tag) => {
     const res = await Tool.find({
         tags: tag,
-    });
+    }, "id title description link tags");
     return res;
 }
 

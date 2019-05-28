@@ -23,10 +23,22 @@ Aqui está um breve status da api, como nome e versão atual.
 
             Accept: application/json
             Content-Type: application/json
-    + Attributes (Tool)
+    + Attributes (ToolPost)
+        
 
 + Response 201 (application/json)
-    + Attributes (Created)
+    + Attributes
+        + title (string)
+        + link (string)
+        + description (string)
+        + tags (array)
+        + id (string)
+        + __v (number)
+
++  Response 500 (application/json)
+    + Attributes
+        + message (string)
+        + error (string)
 
 ### Listar ferramentas [GET]
 
@@ -36,40 +48,66 @@ Aqui está um breve status da api, como nome e versão atual.
 + Response 404 (application/json)
     + Attributes (Error)
 
+## Ferramentas [/tools?tag={tag}]
+
+### Buscar por tag [GET]
+
++ Parameters
+    + tag: teste (string, required) - Tag a ser pesquisada
+
++ Response 200 (application/json)
+    + Attributes (array[Tool])
+
+
 ## Ferramenta [/tools/{id_tool}]
 
 + Parameters
-    + id_tool: 5cdf26cd88952753d4654b12 (string, required) - Identificador da ferramenta
+    + id_tool: 5cdf26cd88952753d4654b12 (string, required) - Identificador da ferramenta    
 
-### Ver ferramenta [GET]
+### Ver uma ferramenta [GET]
 
 + Response 200 (application/json)
     + Attributes (Tool)
 
-+ Response 404 (application/json)
-    + Attributes (Error)
+### Editar uma ferramenta [PUT]
 
++ Request Atualizar uma ferramenta
+
+    + Headers
+
+            Accept: application/json
+            Content-Type: application/json
+    + Attributes (ToolUpdate)
+
++ Response 200 (application/json)
+    + Attributes (Tool)
 
 ### Excluir ferramenta [DELETE]
 
 + Response 200 (application/json)
-    + Attributes (Id)
-
-+ Response 404 (application/json)
-    + Attributes (Error)
+    + Attributes
+        + message: Tool removed! (string)
 
 # Data Structures
 
+## ToolPost (object)
++ title: Minha Ferramenta (string, required) - Título da ferramenta
++ link: http://minhaferramenta.com.br (string, required) - Link de acesso a ferramenta
++ description: Descricão da minha ferramenta (string, required) - Descricão da ferramenta
++ tags: minha, ferramenta, node (array) - Lista de tags da ferramenta
+
+## ToolUpdate (object)
++ title: Minha Ferramenta (string) - Título da ferramenta
++ link: http://minhaferramenta.com.br (string) - Link de acesso a ferramenta
++ description: Descricão da minha ferramenta (string) - Descricão da ferramenta
++ tags: minha, ferramenta, node (array) - Lista de tags da ferramenta
+
 ## Tool (object)
-+ subject (string) - Assunto da mensagem
-+ body (string) - Corpo da mensagem
-
-
-## MessageUpdate (Tool)
-+ id_message (number) - Id da mensagem
-
-## Created (object)
-+ id (string) - Id gerado
++ id: 5ced3c63c5eba42d7c878a6e (string) - Id da ferramenta 
++ title: Minha Ferramenta (string) - Título da ferramenta
++ link: http://minhaferramenta.com.br (string) - Link de acesso a ferramenta
++ description: Descricão da minha ferramenta (string) - Descricão da ferramenta
++ tags: minha, ferramenta, node (array) - Lista de tags da ferramenta
 
 ## Id (object)
 + id (string) - Id a ser processado
@@ -78,9 +116,3 @@ Aqui está um breve status da api, como nome e versão atual.
 + code: 400 (number) - Status code
 + message (string) - Mensagem do status
 + description (string) - Descrição do status
-
-
-## Multi (object)
-+ id (number) - Código da entidade
-+ code: 200 (number) - Status code
-+ message (string) - Descrição do status

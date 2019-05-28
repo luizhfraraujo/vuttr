@@ -20,7 +20,8 @@ Aqui está um breve status da api, como nome e versão atual.
 + Request Criar uma ferramenta
 
     + Headers
-
+    
+            Authorization: Bearer JWT
             Accept: application/json
             Content-Type: application/json
     + Attributes (ToolPost)
@@ -74,7 +75,8 @@ Aqui está um breve status da api, como nome e versão atual.
 + Request Atualizar uma ferramenta
 
     + Headers
-
+    
+            Authorization: Bearer JWT
             Accept: application/json
             Content-Type: application/json
     + Attributes (ToolUpdate)
@@ -83,6 +85,10 @@ Aqui está um breve status da api, como nome e versão atual.
     + Attributes (Tool)
 
 ### Excluir ferramenta [DELETE]
+
+    + Headers
+    
+            Authorization: Bearer JWT
 
 + Response 200 (application/json)
     + Attributes
